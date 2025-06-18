@@ -11,7 +11,7 @@
     };
 
     // Send the data with keepalive for reliability
-    fetch('/api/collect', {
+    fetch('https://op-analytics.vercel.app/api/collect', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
