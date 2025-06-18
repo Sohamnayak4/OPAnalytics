@@ -18,21 +18,34 @@ interface GroupedData {
 // Define the analytics file path
 const ANALYTICS_FILE = path.join(process.cwd(), 'data', 'analytics.json');
 
-// Function to read hits from file
-async function readHitsFromFile(): Promise<Hit[]> {
+// Import memory store from collect endpoint
+// In a real app, this would be a shared database
+declare global {
+  var memoryStore: Hit[] | undefined;
+}
+
+// Function to read hits from both file and memory
+async function readAllHits(): Promise<Hit[]> {
+  const fileHits: Hit[] = [];
+  const memoryHits: Hit[] = globalThis.memoryStore || [];
+
+  // Try to read from file first
   try {
     const fileContent = await fs.readFile(ANALYTICS_FILE, 'utf8');
     const lines = fileContent.trim().split('\n').filter(line => line.length > 0);
-    return lines.map(line => JSON.parse(line) as Hit);
+    fileHits.push(...lines.map(line => JSON.parse(line) as Hit));
   } catch {
-    // File doesn't exist or is empty, return empty array
-    return [];
+    // File doesn't exist or is empty, that's ok
+    console.log('Could not read analytics file, using memory store only');
   }
+
+  // Combine file hits and memory hits
+  return [...fileHits, ...memoryHits];
 }
 
 export async function GET(request: NextRequest) {
   try {
-    const hits = await readHitsFromFile();
+    const hits = await readAllHits();
     
     // Get query parameters
     const { searchParams } = new URL(request.url);
@@ -59,13 +72,13 @@ export async function GET(request: NextRequest) {
     if (includeGrouped && hits.length > 0) {
       // Group by URLs
       const urlCounts: GroupedData = {};
-      hits.forEach(hit => {
+      hits.forEach((hit: Hit) => {
         urlCounts[hit.url] = (urlCounts[hit.url] || 0) + 1;
       });
       
       // Group by referrers (exclude empty referrers for cleaner data)
       const referrerCounts: GroupedData = {};
-      hits.forEach(hit => {
+      hits.forEach((hit: Hit) => {
         if (hit.referrer && hit.referrer.trim() !== '') {
           referrerCounts[hit.referrer] = (referrerCounts[hit.referrer] || 0) + 1;
         }
@@ -73,7 +86,7 @@ export async function GET(request: NextRequest) {
       
       // Group by user agents (simplified - just browser families)
       const userAgentCounts: GroupedData = {};
-      hits.forEach(hit => {
+      hits.forEach((hit: Hit) => {
         // Simple user agent parsing for common browsers
         let browser = 'Unknown';
         const ua = hit.userAgent.toLowerCase();
@@ -109,7 +122,7 @@ export async function GET(request: NextRequest) {
         browserDistribution: sortByCount(userAgentCounts),
         uniqueUrls: Object.keys(urlCounts).length,
         uniqueReferrers: Object.keys(referrerCounts).length,
-        directTraffic: hits.filter(hit => !hit.referrer || hit.referrer.trim() === '').length
+        directTraffic: hits.filter((hit: Hit) => !hit.referrer || hit.referrer.trim() === '').length
       };
     }
     
