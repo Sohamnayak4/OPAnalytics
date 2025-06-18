@@ -43,7 +43,7 @@ export default function Home() {
               Everything you need to understand your audience
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Get insights into your website traffic without compromising your visitors' privacy.
+              Get insights into your website traffic without compromising your visitors&apos; privacy.
             </p>
           </div>
 
@@ -77,7 +77,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Lightweight</h3>
               <p className="text-gray-600">
-                Tiny JavaScript snippet that won't slow down your website. Less than 2KB and loads instantly.
+                Tiny JavaScript snippet that won&apos;t slow down your website. Less than 2KB and loads instantly.
               </p>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function Home() {
             </p>
             <div className="bg-black/20 rounded-lg p-6 font-mono text-left max-w-2xl mx-auto mb-8">
               <code className="text-blue-100">
-                &lt;script src="/track.js"&gt;&lt;/script&gt;
+                &lt;script src=&quot;/track.js&quot;&gt;&lt;/script&gt;
               </code>
             </div>
             <Link

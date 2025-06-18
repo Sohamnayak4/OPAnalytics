@@ -24,7 +24,7 @@ async function readHitsFromFile(): Promise<Hit[]> {
     const fileContent = await fs.readFile(ANALYTICS_FILE, 'utf8');
     const lines = fileContent.trim().split('\n').filter(line => line.length > 0);
     return lines.map(line => JSON.parse(line) as Hit);
-  } catch (error) {
+  } catch {
     // File doesn't exist or is empty, return empty array
     return [];
   }
@@ -39,7 +39,18 @@ export async function GET(request: NextRequest) {
     const includeGrouped = searchParams.get('grouped') === 'true';
     
     // Base response with all hits
-    const response: any = {
+    const response: {
+      totalHits: number;
+      hits: Hit[];
+      analytics?: {
+        topUrls: GroupedData;
+        topReferrers: GroupedData;
+        browserDistribution: GroupedData;
+        uniqueUrls: number;
+        uniqueReferrers: number;
+        directTraffic: number;
+      };
+    } = {
       totalHits: hits.length,
       hits: hits
     };
@@ -104,8 +115,8 @@ export async function GET(request: NextRequest) {
     
     return NextResponse.json(response, { status: 200 });
     
-  } catch (error) {
-    console.error('Error retrieving analytics stats:', error);
+  } catch (err) {
+    console.error('Error retrieving analytics stats:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 } 

@@ -62,7 +62,7 @@ export default function Docs() {
                   </p>
                   <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
                     <code className="text-green-400 text-sm">
-                      &lt;script src="https://your-opanalytics-domain.com/track.js"&gt;&lt;/script&gt;
+                      &lt;script src=&quot;https://your-opanalytics-domain.com/track.js&quot;&gt;&lt;/script&gt;
                     </code>
                   </div>
                 </div>
@@ -70,7 +70,7 @@ export default function Docs() {
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
                   <h4 className="text-lg font-semibold text-blue-900 mb-2">💡 Pro Tip</h4>
                   <p className="text-blue-800">
-                    The tracking script is only 2KB and loads asynchronously, so it won't slow down your website.
+                    The tracking script is only 2KB and loads asynchronously, so it won&apos;t slow down your website.
                   </p>
                 </div>
               </section>
@@ -229,7 +229,7 @@ export default function Layout({ children }) {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-medium text-gray-900 mb-2">❌ We Don't Collect</h4>
+                      <h4 className="font-medium text-gray-900 mb-2">❌ We Don&apos;t Collect</h4>
                       <ul className="space-y-1 text-gray-600">
                         <li>• IP addresses</li>
                         <li>• Personal information</li>

@@ -194,7 +194,6 @@ export default function Dashboard() {
             <div className="space-y-3">
               {stats?.analytics?.browserDistribution && Object.entries(stats.analytics.browserDistribution).map(([browser, count], index) => {
                 const colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-orange-500', 'bg-red-500'];
-                const bgColors = ['bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-orange-100', 'bg-red-100'];
                 return (
                   <div key={browser} className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
@@ -261,7 +260,7 @@ export default function Dashboard() {
           <div className="bg-white rounded-lg shadow p-6">
             <h3 className="text-lg font-medium text-gray-900 mb-4">Page Performance</h3>
             <div className="space-y-3">
-              {stats?.analytics?.topUrls && Object.entries(stats.analytics.topUrls).slice(0, 4).map(([url, count], index) => (
+              {stats?.analytics?.topUrls && Object.entries(stats.analytics.topUrls).slice(0, 4).map(([url, count]) => (
                 <div key={url} className="flex items-center space-x-3">
                   <div className="flex-1">
                     <div className="text-xs text-gray-600 truncate" title={url}>
@@ -406,7 +405,7 @@ export default function Dashboard() {
             <h4 className="text-sm font-medium text-yellow-800 mb-2">📝 Setup Instructions:</h4>
             <ul className="text-sm text-yellow-700 space-y-1">
               <li>1. Copy the script tag above</li>
-              <li>2. Paste it into your website's HTML</li>
+                              <li>2. Paste it into your website&apos;s HTML</li>
               <li>3. Deploy your changes</li>
               <li>4. Visit your website to test tracking</li>
               <li>5. Check this dashboard for new data</li>

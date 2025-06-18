@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     const dataDir = path.dirname(ANALYTICS_FILE);
     try {
       await fs.mkdir(dataDir, { recursive: true });
-    } catch (error) {
+    } catch {
       // Directory might already exist, continue
     }
     
@@ -61,8 +61,8 @@ export async function POST(request: NextRequest) {
     // Return success response
     return NextResponse.json({ success: true }, { status: 200 });
     
-  } catch (error) {
-    console.error('Error processing analytics hit:', error);
+  } catch (err) {
+    console.error('Error processing analytics hit:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 } 
